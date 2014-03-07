@@ -132,10 +132,19 @@ video#hPlayer::-webkit-media-controls-enclosure {
     background: #fa4a7a;
 }
 
-#playControl #vol_ico {
+#playControl #vol{
     position: relative;
     margin-left: 3%;
     margin-top: 5px;
+    width: 6%;
+    height: 40px;
+    line-height: 40px;
+    float: left;
+    cursor: pointer;
+}
+
+#playControl #vol_ico {
+    position: relative;
     width: 6%;
     height: 40px;
     line-height: 40px;
@@ -168,6 +177,46 @@ video#hPlayer::-webkit-media-controls-enclosure {
     position: absolute;
     top: 8px;
     left: 20px;
+}
+
+#playControl #vol:hover #vol_process{
+    visibility: visible;
+}
+
+#playControl #vol #vol_process{
+    position: absolute;
+    width: 5px;
+    height: 100px;
+    cursor: pointer;
+    background: rgba(32, 212,72,.3);
+    margin: 0 auto;
+    bottom: 31px;
+    left: 45%;
+    visibility: hidden;
+}
+
+#playControl #vol #vol_process:hover{
+    visibility: visible;
+}
+
+#playControl #vol #vol_process #vol_process_past{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 5px;
+    height: 20px;
+    background:rgba(250,74,122,.8);
+}
+
+#playControl #vol #vol_process #vol_process_past #vol_process_ico{
+    position: relative;
+    float: right;
+    bottom: 6px;
+    left: 3px;
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    background: #fa4a7a;
 }
 
 #playControl #full {

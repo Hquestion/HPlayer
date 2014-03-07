@@ -2,6 +2,11 @@
 <html>
 <head>
     <title></title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="css/HPlayer.css" type="text/css"/>
+    <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/HPlayer.js"></script>
 </head>
 <body>
 <div id="HPlayer_main">
@@ -9,11 +14,8 @@
         <source src="video/basket.mp4" type="video/mp4"/>
     </video>
     <!--播控-->
-    <div id="playControl">
-        <div id="stop">停止
-            <div id="stop_ico"></div>
-        </div>
-        <div id="pause">暂停/播放
+    <div id="playControl" style="visibility: visible">
+        <div id="pause">
             <div id="pause_ico"></div>
         </div>
         <div id="process">
@@ -21,7 +23,7 @@
                 <div id="process_ico"></div>
             </div>
         </div>
-        <div id="vol">音量
+        <div id="vol">
             <div id="vol_ico"></div>
             <div id="vol_process">
                 <div id="vol_process_past">
@@ -29,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <div id="full">全屏
+        <div id="full">
             <div id="full_ico"></div>
         </div>
     </div>

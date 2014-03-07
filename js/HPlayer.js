@@ -11,7 +11,7 @@ var defarltSetting = {
     autoplay: false,
     preload: false,
     controls: false,
-    volume: .5
+    volume: 0.5
 };
 
 var HPlayer = function(type, $dom){
@@ -65,24 +65,38 @@ HPlayer.prototype._bindEvent = function(){
                 //全屏状态
                 //鼠标10s不动自动隐藏播控
                 var moveFlag = false;
+
+                var hideProcess = function(){
+                    if(!moveFlag){
+                        moveFlag = false;
+                        self.playControl.css("visibility", "hidden");
+                    }else{
+                        moveFlag = false;
+                    }
+                    clearTimeout(self.mouseTimer);
+                    self.mouseTimer = setTimeout(hideProcess, 10000);
+                };
+
                 $(document).unbind("mousemove").on("mousemove", function(){
                     moveFlag = true;
                     self.playControl.css("visibility", "visible");
                 });
                 self.playerDOM.unbind("mouseover").on("mouseover", function(e){
-                    self.mouseTimer = setInterval(function(){
-                        if(!moveFlag){
-                            moveFlag = false;
-                            self.playControl.css("visibility", "hidden");
-                        }else{
-                            moveFlag = false;
-                        }
-                    },10000)
+//                    self.mouseTimer = window.setInterval(function(){
+//                        if(!moveFlag){
+//                            moveFlag = false;
+//                            self.playControl.css("visibility", "hidden");
+//                        }else{
+//                            moveFlag = false;
+//                        }
+//                    },10000)
+                    hideProcess();
                 })
             }else{
                 //非全屏状态
                 $(document).unbind("mousemove");
-                window.clearInterval(self.mouseTimer);
+//                window.clearInterval(self.mouseTimer);
+                clearTimeout(self.mouseTimer);
                 self.playerDOM.unbind("mouseover").on("mouseover", function(){
                     self.playControl.css("visibility", "visible");
                 }).on("mouseout", function(){
