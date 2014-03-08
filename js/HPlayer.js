@@ -1,7 +1,7 @@
 var $playerDom = $("<div id='HPlayer_main'><video id='hPlayer'><source/></video></div>");
 var $playControl = $("<div id='playControl'><div id='pause'><div id='pause_ico'></div></div>" +
     "<div id='videoTime'><div id='startTime'>00:00:00</div><div id='timeSplit'>/</div>" +
-    "<div id='endTime'>00:23:08</div></div>" +
+    "<div id='endTime'>00:00:00</div></div>" +
     "<div id='process'><div id='process_past'><div id='process_ico'></div></div></div>" +
     "<div id='vol'><div id='vol_ico'></div>" +
     "<div id='vol_process'><div id='vol_process_past'><div id='vol_process_ico'></div></div></div></div>" +
