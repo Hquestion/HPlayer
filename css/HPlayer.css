@@ -16,6 +16,7 @@ body {
 #hPlayer {
     z-index: 9;
     cursor: default;
+    background: #000;
 }
 
 video#hPlayer::-webkit-media-controls-enclosure {
@@ -75,37 +76,58 @@ video#hPlayer::-webkit-media-controls-enclosure {
     left: 22px;
 }
 
-#playControl #startTime {
+#playControl #videoTime{
     position: absolute;
     left: 9%;
-    top: 25px;
-    width: 30px;
+    top: 15px;
+    width: 200px;
     height: 20px;
     line-height: 20px;
     color: #fa4a7a;
     cursor: default;
+}
+
+#playControl #videoTime #startTime {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 60px;
+    height: 20px;
+    line-height: 20px;
+    color: #fa4a7a;
+    cursor: default;
+    float: left;
+}
+
+#playControl #videoTime #timeSplit{
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 8px;
+    height: 20px;
+    line-height: 20px;
+    color: #fa4a7a;
+    cursor: default;
+    float: left;
 }
 
 #playControl #endTime {
-    position: absolute;
-    left: 74%;
-    top: 25px;
-    width: 30px;
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 60px;
     height: 20px;
     line-height: 20px;
     color: #fa4a7a;
     cursor: default;
-}
-
-#playControl #endTime.fullscreen{
-    left: 79%;
+    float: left;
 }
 
 #playControl #process {
-    position: relative;
-    margin-left: 2%;
-    margin-top: 15px;
-    width: 72%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
     height: 5px;
     background: #2ad48a;
     float: left;
@@ -125,7 +147,7 @@ video#hPlayer::-webkit-media-controls-enclosure {
     position: relative;
     float: right;
     top: -2px;
-    right: -5px;
+    right: -8px;
     width: 10px;
     height: 10px;
     border-radius: 8px;
@@ -134,18 +156,18 @@ video#hPlayer::-webkit-media-controls-enclosure {
 
 #playControl #vol{
     position: relative;
-    margin-left: 3%;
+    right: 10%;
     margin-top: 5px;
-    width: 6%;
+    width: 160px;
     height: 40px;
     line-height: 40px;
-    float: left;
+    float: right;
     cursor: pointer;
 }
 
 #playControl #vol_ico {
     position: relative;
-    width: 6%;
+    width: 40px;
     height: 40px;
     line-height: 40px;
     float: left;
@@ -179,40 +201,31 @@ video#hPlayer::-webkit-media-controls-enclosure {
     left: 20px;
 }
 
-#playControl #vol:hover #vol_process{
-    visibility: visible;
-}
-
 #playControl #vol #vol_process{
-    position: absolute;
-    width: 5px;
-    height: 100px;
+    position: relative;
+    width: 100px;
+    height: 5px;
     cursor: pointer;
-    background: rgba(32, 212,72,.3);
+    background: #2ad48a;
     margin: 0 auto;
-    bottom: 31px;
-    left: 45%;
-    visibility: hidden;
-}
-
-#playControl #vol #vol_process:hover{
-    visibility: visible;
+    float: left;
+    top: 18px;
 }
 
 #playControl #vol #vol_process #vol_process_past{
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 5px;
-    height: 20px;
-    background:rgba(250,74,122,.8);
+    width: 0px;
+    height: 5px;
+    background: #fa4a7a;
 }
 
 #playControl #vol #vol_process #vol_process_past #vol_process_ico{
     position: relative;
     float: right;
-    bottom: 6px;
-    left: 3px;
+    right: -10px;
+    top: -3px;
     width: 12px;
     height: 12px;
     border-radius: 6px;
@@ -220,13 +233,12 @@ video#hPlayer::-webkit-media-controls-enclosure {
 }
 
 #playControl #full {
-    position: relative;
-    margin-left: 1%;
+    position: absolute;
+    right: 2%;
     margin-top: 5px;
-    width: 8%;
+    width: 40px;
     height: 40px;
     line-height: 40px;
-    float: left;
     cursor: pointer;
 }
 
@@ -280,8 +292,4 @@ video#hPlayer::-webkit-media-controls-enclosure {
     bottom: 0;
     left: 0;
     position: fixed;
-}
-
-:-webkit-full-screen #playControl #endTime{
-    left: 79%;
 }

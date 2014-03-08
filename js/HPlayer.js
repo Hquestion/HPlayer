@@ -1,8 +1,9 @@
 var $playerDom = $("<div id='HPlayer_main'><video id='hPlayer'><source/></video></div>");
 var $playControl = $("<div id='playControl'><div id='pause'><div id='pause_ico'></div></div>" +
-    "<div id='startTime'>00:00:00</div>" +
+    "<div id='videoTime'><div id='startTime'>00:00:00</div><div id='timeSplit'>/</div>" +
+    "<div id='endTime'>00:23:08</div></div>" +
     "<div id='process'><div id='process_past'><div id='process_ico'></div></div></div>" +
-    "<div id='endTime'>00:00:00</div><div id='vol'><div id='vol_ico'></div>" +
+    "<div id='vol'><div id='vol_ico'></div>" +
     "<div id='vol_process'><div id='vol_process_past'><div id='vol_process_ico'></div></div></div></div>" +
     "<div id='full'><div id='full_ico'></div></div></div>");
 
@@ -61,8 +62,15 @@ HPlayer.prototype._bindEvent = function(){
     $( document ).bind(
         'fullscreenchange webkitfullscreenchange mozfullscreenchange',
         function(){
+            var totalProcessLength = self._getProcessLength();
+            var currentTime = self.getCurrentTime();
+            var totalTime = self.getTotalTime();
+            var currentProcessLength = (currentTime / totalTime) * totalProcessLength;
             if(self.isFullScreen()){
                 //全屏状态
+                //设置进度条长度
+                self.playControl.find("#process_past").css("width", currentProcessLength + "px");
+
                 //鼠标10s不动自动隐藏播控
                 var moveFlag = false;
 
@@ -82,20 +90,15 @@ HPlayer.prototype._bindEvent = function(){
                     self.playControl.css("visibility", "visible");
                 });
                 self.playerDOM.unbind("mouseover").on("mouseover", function(e){
-//                    self.mouseTimer = window.setInterval(function(){
-//                        if(!moveFlag){
-//                            moveFlag = false;
-//                            self.playControl.css("visibility", "hidden");
-//                        }else{
-//                            moveFlag = false;
-//                        }
-//                    },10000)
                     hideProcess();
-                })
+                });
+
             }else{
                 //非全屏状态
+                //设置进度条长度
+                self.playControl.find("#process_past").css("width", currentProcessLength + "px");
+
                 $(document).unbind("mousemove");
-//                window.clearInterval(self.mouseTimer);
                 clearTimeout(self.mouseTimer);
                 self.playerDOM.unbind("mouseover").on("mouseover", function(){
                     self.playControl.css("visibility", "visible");
@@ -137,6 +140,10 @@ HPlayer.prototype._bindEvent = function(){
         self.setMute(e, $(this));
     });
 
+    this.playControl.find("#vol_process_ico").on("mousedown", function(e){
+        self._dragVolProcess(e, $(this));
+    });
+
     this.playControl.find("#full").on("click", function(){
         self.fullScreen();
     });
@@ -147,6 +154,15 @@ HPlayer.prototype._initPlayControl = function(){
     var $endTime = this.playControl.find("#endTime");
     var totalTime = this.parseTime(this.getTotalTime());
     $endTime.text(totalTime);
+    //音量展示
+    var localStoreVolume= window.localStorage.getItem("volume");
+    var currentVolume = this.player.volume;
+    if(localStoreVolume){
+        currentVolume = localStoreVolume;
+    }
+    var $currentVolProcess = this.playControl.find("#vol_process_past");
+    var currentVolLength = this._getVolProcessLength() * currentVolume;
+    $currentVolProcess.css("width", currentVolLength + "px");
 };
 
 HPlayer.prototype._showProcess = function(){
@@ -175,7 +191,7 @@ HPlayer.prototype._dragProcess = function(e,$ele){
     var $currentProcess = this.playControl.find("#process_past");
     $ele.fadeTo(20, 0.5);
     $(document).on("mousemove", function(e1){
-        if(_move){
+        if(!dragEnd && _move){
             self.player.pause();
             var x = e1.pageX - e.pageX;//偏移量
             e.pageX = e1.pageX;
@@ -198,9 +214,43 @@ HPlayer.prototype._dragProcess = function(e,$ele){
     });
 };
 
+HPlayer.prototype._dragVolProcess = function(e,$ele){
+    var self = this;
+    var dragEnd = false;
+    var _move = true;
+    var $currentProcess = this.playControl.find("#vol_process_past");
+    $ele.fadeTo(20, 0.5);
+    $(document).on("mousemove", function(e1){
+        if(!dragEnd && _move){
+            var x = e1.pageX - e.pageX;//偏移量
+            e.pageX = e1.pageX;
+            if( $currentProcess.width() < self._getVolProcessLength()){
+                $currentProcess.css("width", $currentProcess.width() + x + "px");
+            }else if(x < 0){
+                $currentProcess.css("width", $currentProcess.width() + x + "px");
+            }
+        }
+    });
+    $(document).on("mouseup", function(){
+        if(!dragEnd){
+            dragEnd = true;
+            _move = false;
+            $ele.fadeTo(20, 1);
+            //播放当前位置
+            var currentVolume = Math.round($currentProcess.width()/self._getVolProcessLength() * 100)/100;
+            self.player.volume = currentVolume;
+        }
+    });
+};
+
 HPlayer.prototype._getProcessLength = function(){
-    return this.playControl.find("#process").width() -
-        this.playControl.find("#process_ico").width() - parseInt(this.playControl.find("#process_ico").css("right"));
+    return this.playControl.find("#process").width() - this.playControl.find("#process_ico").width() +
+        (this.playControl.find("#process_ico").width() + parseInt(this.playControl.find("#process_ico").css("right")));
+};
+
+HPlayer.prototype._getVolProcessLength = function(){
+    return this.playControl.find("#vol_process").width() - this.playControl.find("#vol_process_ico").width() +
+        (this.playControl.find("#vol_process_ico").width() + parseInt(this.playControl.find("#vol_process_ico").css("right")));
 };
 
 HPlayer.prototype.playPause = function(){
