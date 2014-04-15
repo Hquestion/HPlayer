@@ -7,9 +7,9 @@ HTML5播放器插件
 
 Getting Start:
 
-导入HPlayer.js及jquery库先~~
+导入jquery库及HPlayer.js先~~
 
-$(function(){
+
 
     var myPlayer = new HPlayer("video/mp4", $("body"));
     myPlayer._initHPlayer({
@@ -20,4 +20,4 @@ $(function(){
         poster: "img/33.jpg"
     },"video/basket.mp4");
     
-})
+
