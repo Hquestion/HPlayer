@@ -7,7 +7,7 @@ HTML5播放器插件
 
 Getting Start:
 
-导入jquery库及HPlayer.js先~~
+导入jquery库及HPlayer.js、HPlayer.css先~~
 
 
 
