@@ -8,7 +8,7 @@ var $playControl = $("<div id='playControl'><div id='pause'><div id='pause_ico'>
     "<div id='full'><div id='full_ico'></div></div></div>");
 
 var defarltSetting = {
-    width: 600,
+    width: 500,
     autoplay: false,
     preload: false,
     controls: false,
