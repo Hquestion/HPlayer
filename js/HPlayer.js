@@ -21,21 +21,20 @@ var HPlayer = function(type, $dom){
     this.playerDOM = $playerDom.find("#hPlayer");
     this.playControl = $playControl;
     $playControl.appendTo($playerDom);
-    $playerDom.find("source").attr("type", type);
     $playerDom.appendTo($dom);
 };
 
 HPlayer.prototype._initHPlayer = function(param, playurl){
-    for(var i in defarltSetting){
-        this.playerDOM.attr(i, defarltSetting[i]);
-    }
-    for(var item in param){
+    var settings = $.extend(defarltSetting, param);
+    for(var item in settings){
         this.playerDOM.attr(item, param[item]);
     }
+    $playerDom.css("width", settings.width + "px");
     //存储音量设置到本地
 //    $.cookie("volume", this.playerDOM.attr("volume"));
     window.localStorage.setItem("volume", this.playerDOM.attr("volume"));
     this.playerDOM.find("source").attr("src", playurl);
+    $playerDom.find("source").attr("type", type);
     this._bindEvent();
 };
 
