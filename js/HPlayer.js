@@ -159,6 +159,7 @@ HPlayer.prototype._initPlayControl = function(){
     if(localStoreVolume){
         currentVolume = localStoreVolume;
     }
+    currentVolume = currentVolume > 1 ? 1: currentVolume;
     var $currentVolProcess = this.playControl.find("#vol_process_past");
     var currentVolLength = this._getVolProcessLength() * currentVolume;
     $currentVolProcess.css("width", currentVolLength + "px");
