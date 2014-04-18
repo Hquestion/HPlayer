@@ -7,10 +7,9 @@ Getting Start:
 
 导入jquery库及HPlayer.js、HPlayer.css先~~
 
-
   var myPlayer = new HPlayer("video/mp4", $("body"));
   myPlayer._initHPlayer({
-      width: 600,
+      width: 800,
       preload: "auto",
       autoplay: false,
       volume: 0.5,
